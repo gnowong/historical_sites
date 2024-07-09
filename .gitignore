@@ -1,2 +1,3 @@
 .venv*
-leaflet
+leaflet*
+__pycache__
