@@ -34,6 +34,8 @@
 			const sites = JSON.parse(site_json);
 			sites.forEach(site => {
 				console.log(site.site_name);
+				const marker = L.marker([site.lon, site.lat]).addTo(map)
+					.bindPopup(site.site_name).openPopup();
 			});
 		</script>
     </body>
