@@ -5,10 +5,8 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
-	<title>Quick Start - Leaflet</title>
+	<title>Historical Sites</title>
 	
-	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
-
     <link rel="stylesheet" href="{{ url_for('static', filename='leaflet.css') }}"/>
     <!-- <script src="{{ url_for('static', filename='leaflet.js') }}"></script> -->
 
@@ -32,9 +30,11 @@
         <script src="{{ url_for('static', filename='leaflet.js') }}"></script>
         <script src="{{ url_for('static', filename='mapRenderer.ts') }}"></script>
 		<script>
-			{% for site in sites %}
-				console.log("yeah");
-			{% endfor %}
+			const site_json = {{sites|tojson}};
+			const sites = JSON.parse(site_json);
+			sites.forEach(site => {
+				console.log(site.site_name);
+			});
 		</script>
     </body>
 </html>
