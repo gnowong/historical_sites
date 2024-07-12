@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for
 from db import db
 from constants import DATABASE
 
@@ -14,10 +14,13 @@ app = create_app()
 
 
 @app.route("/")
-def map_stuff():
+def map_sites():
     database = db.get_db()
 
-    stuff = database.execute("SELECT * FROM sites")
-    sites_json = db.to_json(stuff)
+    sites = database.execute("SELECT * FROM sites")
+    sites_json = db.to_json(sites)
+    for site in sites.fetchall():
+        name = site["site_name"].replace(" ", "-")
+        url_for("static", filename=f"site-images/{name}") # Add actual images
 
     return render_template('index.html', sites=sites_json)

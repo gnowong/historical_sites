@@ -30,13 +30,20 @@
         <script src="{{ url_for('static', filename='leaflet.js') }}"></script>
         <script src="{{ url_for('static', filename='mapRenderer.ts') }}"></script>
 		<script>
-			const site_json = {{sites|tojson}};
-			const sites = JSON.parse(site_json);
-			sites.forEach(site => {
-				console.log(site.site_name);
-				const marker = L.marker([site.lon, site.lat]).addTo(map)
-					.bindPopup(site.site_name).openPopup();
-			});
+			function mapSites() {
+				const site_json = {{sites|tojson}};
+				const sites = JSON.parse(site_json);
+				sites.forEach(site => {
+					console.log(site.site_name);
+					const img_name = site.site_name.replaceAll(" ", "-");
+					const img = `/static/site-images/${img_name}.jpeg`
+					console.log(img)
+					const marker = L.marker([site.lon, site.lat]).addTo(map)
+						.bindPopup(`${site.site_name} <br></br> <img src=${img} width=128></img>`).openPopup();
+				});
+			}
+
+			mapSites()
 		</script>
     </body>
 </html>
